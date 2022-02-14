@@ -3,7 +3,7 @@ package com.github.chengtengfei.configure;
 
 import com.codahale.metrics.MetricRegistry;
 import okhttp3.OkHttpClient;
-import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnEnabledEndpoint;
+import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnAvailableEndpoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -82,7 +82,7 @@ public class OkHttp3FastAutoConfigure {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnEnabledEndpoint
+    @ConditionalOnAvailableEndpoint
     public OkHttp3FastEndpoint okHttp3FastEndpoint() {
         return new OkHttp3FastEndpoint(registry());
     }
