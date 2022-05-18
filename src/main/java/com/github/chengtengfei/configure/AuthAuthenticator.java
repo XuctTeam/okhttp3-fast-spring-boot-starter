@@ -28,13 +28,13 @@ public class AuthAuthenticator implements Authenticator {
             }
             String authType = WWWAuthParse.authType(responseAuth);
             if ("Basic".equalsIgnoreCase(authType)) {
-                if (!StringUtils.isEmpty(AuthConfig.getBasicUsername()) && !StringUtils.isEmpty(AuthConfig.getBasicPassword())) {
+                if (StringUtils.hasLength(AuthConfig.getBasicUsername()) && StringUtils.hasLength(AuthConfig.getBasicPassword())) {
                     String basicAuth = Credentials.basic(AuthConfig.getBasicUsername(), AuthConfig.getBasicPassword());
                     return response.request().newBuilder().addHeader("Authorization", basicAuth).build();
                 }
                 return null;
             } else if ("Digest".equalsIgnoreCase(authType)) {
-                if (!StringUtils.isEmpty(AuthConfig.getDigestUsername()) && !StringUtils.isEmpty(AuthConfig.getDigestPassword())) {
+                if (StringUtils.hasLength(AuthConfig.getDigestUsername()) && StringUtils.hasLength(AuthConfig.getDigestPassword())) {
                     Map<String, String> digestAuthMap = new HashMap<>();
                     try {
                         digestAuthMap = WWWAuthParse.parseDigestAuthenticateHeader(responseAuth);
@@ -61,7 +61,7 @@ public class AuthAuthenticator implements Authenticator {
                     }
 
                     String authorization = WWWAuthParse.assembleDigestAuthorization(digestAuthMap);
-                    if (!StringUtils.isEmpty(authorization)) {
+                    if (StringUtils.hasLength(authorization)) {
                         return response.request().newBuilder().addHeader("Authorization", authorization).build();
                     }
                 }
